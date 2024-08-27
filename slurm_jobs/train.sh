@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=ragdriver
 #SBATCH --account=project_2010633
-#SBATCH --partition=gputest
-#SBATCH --time=00:05:00
+#SBATCH --partition=gpusmall
+#SBATCH --time=00:10:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --gres=gpu:a100:1
@@ -12,13 +12,12 @@
 # export PATH="/projappl/project_2010633/Video-LLaVA/videollava_evn/bin:$PATH"
 export WORKSPACE=$(pwd)
 
-export CACHESPACE=/scratch/project_2010633/videollava_cache
+export CACHESPACE=/scratch/project_2010633/videollama2
 
-export PATH=${WORKSPACE}/rag_env/bin:$PATH
+export PATH=${WORKSPACE}/vlm2_env/bin:$PATH
 export HF_DATASETS_CACHE=${CACHESPACE}
 export XDG_CACHE_HOME=${CACHESPACE}
 export PIP_CACHE_DIR=${CACHESPACE}
-export TRANSFORMERS_CACHE=${CACHESPACE}
 export HF_HOME=${CACHESPACE}
 
 

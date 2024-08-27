@@ -18,8 +18,8 @@ if [ ! -n "$MASTER_ADDR" ] || [ ! -n "$MASTER_PORT" ] || [ ! -n "$RANK" ]; then
     RANK=$ARG_RANK
 fi
 
-echo "WORLD_SIZE: $WORLD_SIZE"
-echo "NPROC_PER_NODE: $NPROC_PER_NODE"
+#echo "WORLD_SIZE: $WORLD_SIZE"
+#echo "NPROC_PER_NODE: $NPROC_PER_NODE"
 
 # Training Arguments
 GLOBAL_BATCH_SIZE=128
@@ -34,18 +34,20 @@ export DATA_DIR="/scratch/project_2010633/videollama2/video_process"
 OUTP_DIR=work_dirs
 
 export VIDEOLLAMA2_FOLDER="/scratch/project_2010633/videollama2"
-
+export TORCH_USE_CUDA_DSA=1
+export CUDA_LAUNCH_BLOCKING=1
+export nproc_per_node=1
 # vision_tower == vision encoder : https://huggingface.co/openai/clip-vit-large-patch14-336/tree/main
 # https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
-torchrun --nnodes $WORLD_SIZE \
-    --nproc_per_node $NPROC_PER_NODE \
+HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=0 torchrun --nnodes $WORLD_SIZE \
+    --nproc_per_node $nproc_per_node \
     --master_addr=$MASTER_ADDR \
     --master_port=$MASTER_PORT \
     --node_rank $RANK \
     videollama2/train_flash_attn.py \
     --deepspeed scripts/zero3.json \
     --model_type videollama2 \
-    --model_path ${VIDEOLLAMA2_FOLDER}/mistralai/Mistral-7B-Instruct-v0.2 \
+    --model_path ${VIDEOLLAMA2_FOLDER}/Mistral-7B-Instruct-v0.2 \
     --vision_tower ${VIDEOLLAMA2_FOLDER}/openai/clip-vit-large-patch14-336 \
     --mm_projector_type stc_connector \
     --pretrain_mm_mlp_adapter ${VIDEOLLAMA2_FOLDER}/VideoLLaMA2-7B/mm_projector.bin \
