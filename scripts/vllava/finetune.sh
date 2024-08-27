@@ -30,9 +30,13 @@ GRADIENT_ACCUMULATION_STEPS=$[$GLOBAL_BATCH_SIZE/($WORLD_SIZE*$NPROC_PER_NODE*$L
 export TRANSFORMERS_OFFLINE=1
 export WANDB_PROJECT=videollama2
 RUN_NAME=vllava_settings
-DATA_DIR=datasets
+export DATA_DIR="/scratch/project_2010633/videollama2/video_process"
 OUTP_DIR=work_dirs
 
+export VIDEOLLAMA2_FOLDER="/scratch/project_2010633/videollama2"
+
+# vision_tower == vision encoder : https://huggingface.co/openai/clip-vit-large-patch14-336/tree/main
+# https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
 torchrun --nnodes $WORLD_SIZE \
     --nproc_per_node $NPROC_PER_NODE \
     --master_addr=$MASTER_ADDR \
@@ -41,19 +45,19 @@ torchrun --nnodes $WORLD_SIZE \
     videollama2/train_flash_attn.py \
     --deepspeed scripts/zero3.json \
     --model_type videollama2 \
-    --model_path mistralai/Mistral-7B-Instruct-v0.2 \
-    --vision_tower openai/clip-vit-large-patch14-336 \
+    --model_path ${VIDEOLLAMA2_FOLDER}/mistralai/Mistral-7B-Instruct-v0.2 \
+    --vision_tower ${VIDEOLLAMA2_FOLDER}/openai/clip-vit-large-patch14-336 \
     --mm_projector_type stc_connector \
-    --pretrain_mm_mlp_adapter ${OUTP_DIR}/${WANDB_PROJECT}/pretrain_${RUN_NAME}/mm_projector.bin \
-    --data_path   ${DATA_DIR}/videollava_sft/videochatgpt_llavaimage_tune.json \
-    --data_folder ${DATA_DIR}/videollava_sft/ \
+    --pretrain_mm_mlp_adapter ${VIDEOLLAMA2_FOLDER}/VideoLLaMA2-7B/mm_projector.bin \
+    --data_path   ${DATA_DIR}/conv_base/conversation_bddx_train.json \
+    --data_folder ${DATA_DIR}/BDDX_Test/ \
     --mm_vision_select_layer -2 \
     --image_aspect_ratio pad \
     --num_frames 8 \
     --bf16 True \
     --tf32 True \
     --fp16 False \
-    --output_dir ${OUTP_DIR}/${WANDB_PROJECT}/finetune_${RUN_NAME} \
+    --output_dir ${VIDEOLLAMA2_FOLDER}/finetune_${RUN_NAME} \
     --num_train_epochs 1 \
     --per_device_train_batch_size $LOCAL_BATCH_SIZE \
     --per_device_eval_batch_size 4 \
