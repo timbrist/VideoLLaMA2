@@ -56,3 +56,7 @@ work_dirs*/
 pretrained/
 publish_models/
 public_models/
+
+rag_env/
+vlm2_env/
+*.out
