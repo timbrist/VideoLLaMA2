@@ -28,6 +28,7 @@ from typing import Dict, Optional, Sequence, List
 # torch-related packages
 # NOTE: torch must be imported before transformers. Otherwise, `Segmentation fault (core dumped)` will occur.
 import torch
+torch.cuda.empty_cache()
 from torch.utils.data import Dataset
 
 import transformers
