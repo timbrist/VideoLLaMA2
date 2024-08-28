@@ -36,7 +36,7 @@ OUTP_DIR=work_dirs
 export VIDEOLLAMA2_FOLDER="/scratch/project_2010633/videollama2"
 export TORCH_USE_CUDA_DSA=1
 export CUDA_LAUNCH_BLOCKING=1
-export nproc_per_node=1
+export nproc_per_node=4
 # vision_tower == vision encoder : https://huggingface.co/openai/clip-vit-large-patch14-336/tree/main
 # https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=0 torchrun --nnodes $WORLD_SIZE \
@@ -51,8 +51,8 @@ HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=0 torchrun --nnodes $WORLD_SIZE \
     --vision_tower ${VIDEOLLAMA2_FOLDER}/openai/clip-vit-large-patch14-336 \
     --mm_projector_type stc_connector \
     --pretrain_mm_mlp_adapter ${VIDEOLLAMA2_FOLDER}/VideoLLaMA2-7B/mm_projector.bin \
-    --data_path   ${DATA_DIR}/conv_base/conversation_bddx_train.json \
-    --data_folder ${DATA_DIR}/BDDX_Test/ \
+    --data_path   ${DATA_DIR}/conv_base/conversation_bddx_train_processed.json \
+    --data_folder ${DATA_DIR}/BDDX_Processed/ \
     --mm_vision_select_layer -2 \
     --image_aspect_ratio pad \
     --num_frames 8 \
