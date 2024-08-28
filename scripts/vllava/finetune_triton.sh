@@ -33,7 +33,7 @@ RUN_NAME=vllava_settings
 export DATA_DIR="/scratch/project_2010633/videollama2/video_process"
 OUTP_DIR=work_dirs
 
-export VIDEOLLAMA2_FOLDER="/home/yans2/videollama2_cache"
+export VIDEOLLAMA2_FOLDER="/scratch/work/yans2/videollama2_cache"
 export TORCH_USE_CUDA_DSA=1
 export CUDA_LAUNCH_BLOCKING=1
 export nproc_per_node=1
