@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --time=00:10:00
-#SBATCH --mem=500M
+#SBATCH --mem=32000M
 #SBATCH --output=pi-gpu.out
-#SBATCH --gpus=4
+#SBATCH --gres=gpu:a100:1
 
 module load cuda/12.2.1
 export WORKSPACE=$(pwd)

@@ -36,7 +36,7 @@ OUTP_DIR=work_dirs
 export VIDEOLLAMA2_FOLDER="/home/yans2/videollama2_cache"
 export TORCH_USE_CUDA_DSA=1
 export CUDA_LAUNCH_BLOCKING=1
-export nproc_per_node=4
+export nproc_per_node=1
 # vision_tower == vision encoder : https://huggingface.co/openai/clip-vit-large-patch14-336/tree/main
 # https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=0 torchrun --nnodes $WORLD_SIZE \
