@@ -5,7 +5,7 @@
 #SBATCH --gpus=4
 
 module load cuda/12.2.1
-
+export WORKSPACE=$(pwd)
 export CACHESPACE=$WRKDIR/videollama2_cache
 export HF_DATASETS_CACHE=${CACHESPACE}
 export XDG_CACHE_HOME=${CACHESPACE}
@@ -14,4 +14,4 @@ export HF_HOME=${CACHESPACE}
 
 
 
-bash ${WORKSPACE}/scripts/vllava/finetune.sh
+bash ${WORKSPACE}/scripts/vllava/finetune_triton.sh
