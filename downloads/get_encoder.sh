@@ -1,6 +1,6 @@
 export DATA_FOLDER="/home/yans2/videollama2_cache"
 
-git clone https://huggingface.co/openai/clip-vit-large-patch14-336
+git clone https://huggingface.co/openai/clip-vit-large-patch14-336 ${DATA_FOLDER}/VideoLLaMA2-7B-Base
 
 wget https://huggingface.co/openai/clip-vit-large-patch14-336/resolve/main/pytorch_model.bin?download=true \
     -O ${DATA_FOLDER}/clip-vit-large-patch14-336/pytorch_model.bin \
