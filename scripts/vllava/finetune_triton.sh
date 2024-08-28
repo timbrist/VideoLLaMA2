@@ -49,7 +49,7 @@ HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=0 torchrun --nnodes $WORLD_SIZE \
     --model_type videollama2 \
     --model_path ${VIDEOLLAMA2_FOLDER}/Mistral-7B-Instruct-v0.2 \
     --vision_tower ${VIDEOLLAMA2_FOLDER}/clip-vit-large-patch14-336 \
-    --mm_projector_type stc_connector \
+    --mm_projector_type stc_connector_v35 \
     --pretrain_mm_mlp_adapter ${VIDEOLLAMA2_FOLDER}/VideoLLaMA2-7B-Base/mm_projector.bin \
     --data_path   ${VIDEOLLAMA2_FOLDER}/video_process/conv_base/conversation_bddx_train_processed.json \
     --data_folder ${VIDEOLLAMA2_FOLDER}/video_process/BDDX_Processed/ \
